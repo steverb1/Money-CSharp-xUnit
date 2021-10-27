@@ -15,7 +15,7 @@ namespace MoneyExercise
 
         public Money add(Money other)
         {
-            return new Money(3.0m, Currency.USD);
+            return new Money(amount + other.amount, Currency.USD);
         }
 
         public override bool Equals(object obj)

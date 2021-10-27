@@ -25,5 +25,17 @@ namespace MoneyExercise.Tests.Unit
             Money expectedResult = new Money(8.0m, Currency.USD);
             Assert.Equal(sum, expectedResult);
         }
+
+        [Fact]
+        public void ThreeUsdPlusFiveInr_ReturnsSumInInr_Stub()
+        {
+            Money money1 = new Money(3.0m, Currency.USD);
+            Money money2 = new Money(5.0m, Currency.INR);
+            money1.SetCurrencyConverter(new ExchangeServiceStub());
+            Money sum = money1.add(money2);
+
+            Money expectedResult = new Money(11.0m, Currency.INR);
+            Assert.Equal(sum, expectedResult);
+        }
     }
 }

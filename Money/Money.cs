@@ -6,7 +6,7 @@ namespace MoneyExercise
     {
         private decimal amount;
         private Currency currency;
-        private ForConvertingCurrencies currencyConverter;
+        private ForConvertingCurrencies exchangeService;
 
         public Money(decimal amount, Currency currency)
         {
@@ -14,19 +14,14 @@ namespace MoneyExercise
             this.currency = currency;
         }
 
-        public void SetCurrencyConverter(ForConvertingCurrencies currencyConverter)
-        {
-            this.currencyConverter = currencyConverter;
-        }
-
         public Money add(Money other)
         {
-            decimal convertedAmount = amount;
             if (currency != other.currency)
             {
-                convertedAmount = currencyConverter.convert(amount, currency, other.currency);
+                decimal newAmount = exchangeService.convert(amount, currency, other.currency);
+                return new Money(other.amount + newAmount, other.currency);
             }
-            return new Money(convertedAmount + other.amount, other.currency);
+            return new Money(amount + other.amount, Currency.USD);
         }
 
         public override bool Equals(object obj)
@@ -39,6 +34,11 @@ namespace MoneyExercise
         public override int GetHashCode()
         {
             return HashCode.Combine(amount, currency);
+        }
+
+        public void SetCurrencyConverter(ForConvertingCurrencies exchangeService)
+        {
+            this.exchangeService = exchangeService;
         }
     }
 }

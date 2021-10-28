@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using FluentAssertions;
+using Money.Tests.Unit;
+using Moq;
 using Xunit;
 
 namespace MoneyExercise.Tests.Unit
@@ -36,7 +38,7 @@ namespace MoneyExercise.Tests.Unit
             Money sum = money1.add(money2);
 
             Money expectedResult = new Money(11.0m, Currency.INR);
-            Assert.Equal(sum, expectedResult);
+            sum.Should().Be(expectedResult);
         }
 
         [Fact]
@@ -52,6 +54,7 @@ namespace MoneyExercise.Tests.Unit
 
             Money expectedResult = new Money(11.0m, Currency.INR);
             Assert.Equal(sum, expectedResult);
+            mockService.VerifyAll();
         }
     }
 }
